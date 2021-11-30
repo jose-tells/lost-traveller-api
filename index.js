@@ -1,18 +1,28 @@
 const express = require('express');
+const app = express();
+
 const { port } = require('./config');
 const posts = require('./routes/posts');
-const users = require('./routes/users');
-const {errorHandler, logErrors, wrapErrors} = require('./utils/middlewares/errorHandlers');
-const notFoundHandler = require('./utils/middlewares/notFoundHandler');
+const userPosts = require('./routes/userPosts');
+const auth = require('./routes/auth');
+
 const debug = require('debug')('app:server')
 const error = require('debug')('app:error')
 
-const app = express();
+const {
+  errorHandler,
+  logErrors,
+  wrapErrors
+} = require('./utils/middlewares/errorHandlers');
+
+const notFoundHandler = require('./utils/middlewares/notFoundHandler');
+
 app.use(express.json());
 
 // Routes
-users(app);
+auth(app);
 posts(app);
+userPosts(app);
 
 // errorHandlers
 app.use(logErrors);

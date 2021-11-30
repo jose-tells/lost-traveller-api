@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "set NODE_ENV=production&& node index",
-    "dev": "set DEBUG=app:* && nodemon index",
+    "start": "cross-env NODE_ENV=production node index",
+    "dev": "cross-env DEBUG=app:* nodemon index",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky install"
   },
@@ -14,19 +14,28 @@
   "license": "MIT",
   "dependencies": {
     "@hapi/boom": "^9.1.4",
+    "bcrypt": "^5.0.1",
+    "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "joi": "^17.4.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^4.2.0",
     "mysql": "^2.18.1",
     "mysql2": "^2.3.3",
+    "passport": "^0.4.1",
+    "passport-http": "^0.3.0",
+    "passport-jwt": "^4.0.0",
     "timeago.js": "^4.0.2"
   },
   "devDependencies": {
+    "chalk": "^4.1.2",
     "eslint": "^8.2.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "husky": "^7.0.4",
     "lint-staged": "^12.0.2",
+    "nodemon": "^2.0.15",
     "prettier": "^2.4.1"
   },
   "lint-staged": {

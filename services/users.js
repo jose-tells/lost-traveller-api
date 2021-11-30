@@ -1,33 +1,28 @@
-const pool = require('../lib/mysql');
+// const pool = require('../lib/mysql');
+const MongoLib = require('../lib/mongo');
+const bcrypt = require('bcrypt');
 
 class UsersService {
   constructor() {
-    this.table = 'users';
-    this.pool = pool;
+    this.collection = 'users';
+    this.mongoDB = new MongoLib();
   }
 
-  async getUsers() {
-    const query = 'SELECT * FROM users;';
-    const users = await this.pool.query(query);
-    return users || [];
+  async getUser({ email }) {
+    const [user] = await this.mongoDB.getAll(this.collection, { email });
+    return user;
   }
 
-  async getUser(userId) {
-    const query = 'SELECT * FROM users WHERE user_id = ?';
-    const user = await this.pool.query(query, [userId]);
-    return user[0] || {};
-  }
+  async createUser({ user }) {
+    const { password } = user;
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-  async createUser(user) {
-    const query = 'INSERT INTO users set ?';
-    const userId = await this.pool.query(query, [user]);
-    return userId.insertId;
-  }
-
-  async deleteUser(userId) {
-    const query = 'DELETE FROM users WHERE user_id = ?';
-    await this.pool.query(query, [userId]);
-    return userId;
+    const createdUserId = await this.mongoDB.create(this.collection, {
+      ...user,
+      password: hashedPassword
+    });
+    
+    return createdUserId;
   }
 };
 

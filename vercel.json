@@ -1,0 +1,26 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "index.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.js"
+    }
+  ],
+  "env": {
+    "DB_USER": "@losttraveller-db-user",
+    "DB_PASSWORD": "@losttraveller-db-password",
+    "DB_HOST": "@losttraveller-db-host",
+    "DB_NAME": "@losttraveller-db-name",
+    "DEFAULT_ADMIN_PASSWORD": "@default-admin-password-lt",
+    "DEFAULT_USER_PASSWORD": "@default-user-password-lt",
+    "AUTH_JWT_SECRET": "@auth-jwt-secret-lt",
+    "ADMIN_API_KEY_TOKEN": "@admin-api-key-token-lt",
+    "PUBLIC_API_KEY_TOKEN": "@public-api-key-token-lt"
+  }
+}

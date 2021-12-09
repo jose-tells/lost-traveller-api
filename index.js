@@ -1,5 +1,7 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
+const helmet = require('helmet');
 
 const { port } = require('./config');
 const users = require('./routes/users');
@@ -14,6 +16,13 @@ const postsRankingsUsersContributors = require('./routes/postsRankingsUsersContr
 
 const debug = require('debug')('app:server')
 const error = require('debug')('app:error')
+
+const corsOptions = {
+  origin: 'http://localhost:3001/'
+}
+
+app.use(cors(corsOptions));
+app.use(helmet());
 
 const {
   errorHandler,

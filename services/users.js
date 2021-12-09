@@ -8,6 +8,13 @@ class UsersService {
     this.mongoDB = new MongoLib();
   }
 
+  async getUserByUsername({ username }) {
+    const user = await this.mongoDB.getByUsername(this.collection, username);
+    delete user.password
+    delete user.email
+    return user || {};
+  };
+
   async getUser({ email }) {
     const [user] = await this.mongoDB.getAll(this.collection, { email });
     return user;
@@ -21,7 +28,7 @@ class UsersService {
       ...user,
       password: hashedPassword
     });
-    
+
     return createdUserId;
   }
 };

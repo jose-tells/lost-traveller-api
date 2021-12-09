@@ -23,7 +23,7 @@ function auth(app) {
   router.post('/sign-in', async (req, res, next) => {
     const { apiKeyToken } = req.body;
     if (!apiKeyToken) {
-      next(boom.unauthorized('apiKeyToken is required'));
+      return next(boom.unauthorized('apiKeyToken is required'));
     };
     passport.authenticate('basic', (error, user) => {
       try {
@@ -32,17 +32,17 @@ function auth(app) {
         }
 
         req.login(user, { session: false }, async (err) => {
-          if(err) {
+          if (err) {
             return next(err);
           };
 
           const apiKey = await apiKeysService.getApiKey({ token: apiKeyToken });
 
-          if(!apiKey) {
+          if (!apiKey) {
             next(boom.unauthorized());
           };
 
-          const { _id: id, firstName, lastName, username, email, profilePhoto, verified, contributions } = user;
+          const { _id: id, firstName, username, email } = user;
 
           const payload = {
             sub: id,
@@ -52,20 +52,15 @@ function auth(app) {
           };
 
           const token = jwt.sign(payload, authJwtSecret, {
-            expiresIn: '15min'
+            expiresIn: '2h'
           });
 
           return res.status(200).json({
             token,
             user: {
               id,
-              firstName,
-              lastName,
               username,
               email,
-              profilePhoto,
-              verified,
-              contributions
             }
           });
         });
@@ -75,7 +70,7 @@ function auth(app) {
     })(req, res, next)
   });
 
-  router.post('/sign-up', validationHandler(createUserSchema), async(req, res, next) =>{
+  router.post('/sign-up', validationHandler(createUserSchema), async (req, res, next) => {
     const { body: user } = req;
 
     try {

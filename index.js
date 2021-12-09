@@ -2,9 +2,15 @@ const express = require('express');
 const app = express();
 
 const { port } = require('./config');
+const users = require('./routes/users');
 const posts = require('./routes/posts');
 const userPosts = require('./routes/userPosts');
 const auth = require('./routes/auth');
+const comments = require('./routes/comments');
+const userComments = require('./routes/userComments');
+const rankings = require('./routes/rankings');
+const postsRankings = require('./routes/postsRankings');
+const postsRankingsUsersContributors = require('./routes/postsRankingsUsersContributors');
 
 const debug = require('debug')('app:server')
 const error = require('debug')('app:error')
@@ -21,8 +27,14 @@ app.use(express.json());
 
 // Routes
 auth(app);
+users(app)
 posts(app);
+comments(app);
 userPosts(app);
+userComments(app);
+rankings(app);
+postsRankings(app)
+postsRankingsUsersContributors(app)
 
 // errorHandlers
 app.use(logErrors);

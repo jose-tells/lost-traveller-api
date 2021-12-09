@@ -4,7 +4,7 @@ const postIdSchema = joi.string().regex(/^[0-9a-fA-F]{24}$/);
 
 const postTitleSchema = joi.string().max(50);
 const postProvinceSchema = joi.string().max(50);
-const postAveragePriceSchema = joi.number().max(4);
+const postAveragePriceSchema = joi.number();
 const postPhotoSchema = joi.string().uri();
 const postWeatherSchema = joi.object();
 const postUserCreatorSchema = joi.object();

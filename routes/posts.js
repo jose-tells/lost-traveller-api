@@ -28,6 +28,8 @@ function posts(app) {
   });
 
   router.get('/:postId',
+    passport.authenticate('jwt', { session: false }),
+    scopeValidationHandler(['read:user-posts']),
     validationHandler({ postId: postIdSchema }, 'params'),
     async (req, res, next) => {
       const { postId } = req.params;
@@ -46,7 +48,7 @@ function posts(app) {
 
   router.post('/',
     passport.authenticate('jwt', { session: false }),
-    scopeValidationHandler(['create:posts']),
+    scopeValidationHandler(['create:user-posts']),
     validationHandler(postSchema),
     async (req, res, next) => {
       const { body: post } = req;
@@ -65,7 +67,7 @@ function posts(app) {
 
   router.patch('/:postId',
     passport.authenticate('jwt', { session: false }),
-    scopeValidationHandler(['update:posts']),
+    scopeValidationHandler(['update:user-posts']),
     validationHandler({ postId: postIdSchema }, 'params'),
     validationHandler(updatePostSchema),
     async (req, res, next) => {
@@ -86,7 +88,7 @@ function posts(app) {
 
   router.delete('/:postId',
     passport.authenticate('jwt', { session: false }),
-    scopeValidationHandler(['delete:posts']),
+    scopeValidationHandler(['delete:user-posts']),
     validationHandler({ postId: postIdSchema }, 'params'),
     async (req, res, next) => {
       const { postId } = req.params;

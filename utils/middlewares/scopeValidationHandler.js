@@ -8,8 +8,8 @@ function scopeValidationHandler(allowedScopes) {
 
     const hasAccess = allowedScopes.map(allowedScope => req.user.scopes
       .includes(allowedScope)).find(allowed => Boolean(allowed));
-    
-    if(hasAccess) {
+
+    if (hasAccess) {
       next();
     } else {
       next(boom.unauthorized('Insuficient scopes'));

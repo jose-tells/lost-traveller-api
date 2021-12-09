@@ -17,23 +17,19 @@ function userPosts(app) {
 
   const userPostsService = new UserPostsService();
 
-  router.get('/',
-    passport.authenticate('jwt', { session: false }),
-    scopeValidationHandler(['read:user-posts']),
-    validationHandler({ userId: userIdSchema }, 'query'),
-    async (req, res, next) => {
-      const { userId } = req.query;
-      try {
-        const userPosts = await userPostsService.getUserPosts({ userId });
+  router.get('/', validationHandler({ userId: userIdSchema }, 'query'), async (req, res, next) => {
+    const { userId } = req.query;
+    try {
+      const userPosts = await userPostsService.getUserPosts({ userId });
 
-        res.status(200).json({
-          data: userPosts,
-          message: 'User posts listed'
-        });
-      } catch (err) {
-        next(err)
-      }
-    });
+      res.status(200).json({
+        data: userPosts,
+        message: 'User posts listed'
+      });
+    } catch (err) {
+      next(err)
+    }
+  });
 
   router.post('/',
     passport.authenticate('jwt', { session: false }),

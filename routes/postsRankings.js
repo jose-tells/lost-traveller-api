@@ -31,7 +31,7 @@ function postsRankings(app) {
 
   router.post('/',
     passport.authenticate('jwt', { session: false }),
-    scopeValidationHandler('[create:users-posts]'),
+    scopeValidationHandler(['create:user-posts']),
     validationHandler(postRankingSchema),
     async (req, res, next) => {
       const { body: postRanking } = req;
@@ -49,7 +49,7 @@ function postsRankings(app) {
 
   router.patch('/:postRankingId',
     passport.authenticate('jwt', { session: false }),
-    scopeValidationHandler('[update:users-posts]'),
+    scopeValidationHandler(['update:user-posts']),
     validationHandler({ postRankingId: postsRankingsIdSchema }),
     validationHandler(updatePostRankingSchema),
     async (req, res, next) => {
@@ -69,7 +69,7 @@ function postsRankings(app) {
 
   router.delete('/:postRankingId',
     passport.authenticate('jwt', { session: false }),
-    scopeValidationHandler('[delete:users-posts]'),
+    scopeValidationHandler(['delete:user-posts']),
     validationHandler({ postRankingId: postRankingSchema }),
     async (req, res, next) => {
       const { postRankingId } = req.params;

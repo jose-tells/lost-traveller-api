@@ -29,7 +29,7 @@ function postsRankingsUsersContributors(app) {
 
   router.post('/',
     passport.authenticate('jwt', { session: false }),
-    scopeValidationHandler('[create:user-posts]'),
+    scopeValidationHandler(['create:user-posts']),
     validationHandler(postsRankingsUsersContributorsSchema),
     async (req, res, next) => {
       const { body: userContributor } = req;
@@ -47,7 +47,7 @@ function postsRankingsUsersContributors(app) {
 
   router.patch('/:userContributorId',
     passport.authenticate('jwt', { session: false }),
-    scopeValidationHandler('[update:user-posts]'),
+    scopeValidationHandler(['update:user-posts']),
     validationHandler({ userContributorId: postsRankingsUsersContributorsIdSchema }, 'params'),
     validationHandler(updatePostsRankingsUsersContributorsSchema),
     async (req, res, next) => {
@@ -67,7 +67,7 @@ function postsRankingsUsersContributors(app) {
 
   router.delete('/:userContributorId',
     passport.authenticate('jwt', { session: false }),
-    scopeValidationHandler('[delete:user-posts]'),
+    scopeValidationHandler(['delete:user-posts']),
     validationHandler({ userContributorId: postsRankingsUsersContributorsIdSchema }, 'params'),
     async (req, res, next) => {
       const { userContributorId } = req.params;

@@ -26,8 +26,6 @@ function comments(app) {
   });
 
   router.get('/:commentId',
-    passport.authenticate('jwt', { session: false }),
-    scopeValidationHandler(['read:user-posts']),
     validationHandler({ commentId: commentIdSchema }, 'params'),
     async (req, res, next) => {
       const { commentId } = req.params;

@@ -35,12 +35,11 @@ function posts(app) {
   });
 
   router.get('/:postId',
-    passport.authenticate('jwt', { session: false }),
-    scopeValidationHandler(['read:user-posts']),
     validationHandler({ postId: postIdSchema }, 'params'),
     async (req, res, next) => {
       const { postId } = req.params;
       cacheResponse(res, SIXTY_MINUTES_IN_SECONDS);
+
       try {
         const post = await postsService.getPost(postId);
 

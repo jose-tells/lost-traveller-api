@@ -14,7 +14,7 @@ function users(app) {
     try {
       const user = await usersService.getUserByUsername({ username })
 
-      const { _id: id, firstName, lastName, verified, contributions, profilePhoto } = user;
+      const { _id: id, firstName, lastName, verified, contributions, profilePhoto, isAdmin } = user;
 
       res.status(200).json({
         data: {
@@ -25,6 +25,7 @@ function users(app) {
           verified,
           contributions,
           profilePhoto,
+          isAdmin,
         },
         message: 'User retrieved'
       });

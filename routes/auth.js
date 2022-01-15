@@ -60,7 +60,7 @@ function auth(app) {
             user: {
               id,
               username,
-              email,
+              email
             }
           });
         });
